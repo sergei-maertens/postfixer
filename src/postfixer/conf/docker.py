@@ -1,4 +1,5 @@
 import os
+
 from django.core.exceptions import ImproperlyConfigured
 
 os.environ.setdefault('DB_USER', os.getenv('DATABASE_USER', 'postgres'))
