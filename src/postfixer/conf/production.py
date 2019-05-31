@@ -13,18 +13,18 @@ ADMINS = (
 )
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postfixer',
-        'USER': 'postfixer',
-        'PASSWORD': 'postfixer',
-        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',  # Set to empty string for default.
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postfixer",
+        "USER": "postfixer",
+        "PASSWORD": "postfixer",
+        "HOST": "",  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        "PORT": "",  # Set to empty string for default.
     }
 }
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '@#^@cohoj8&f3-jyr^85@k%!hb*4y+bb49@x!bp8v9i6lndd=='
+SECRET_KEY = "@#^@cohoj8&f3-jyr^85@k%!hb*4y+bb49@x!bp8v9i6lndd=="
 
 ALLOWED_HOSTS = []
 
@@ -34,21 +34,21 @@ ALLOWED_HOSTS = []
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2", # NOTE: watch out for multiple projects using the same cache!
+        "LOCATION": "redis://127.0.0.1:6379/2",  # NOTE: watch out for multiple projects using the same cache!
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "IGNORE_EXCEPTIONS": True,
-        }
+        },
     }
 }
 
 # Caching sessions.
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 # Caching templates.
-TEMPLATES[0]['OPTIONS']['loaders'] = [
-    ('django.template.loaders.cached.Loader', RAW_TEMPLATE_LOADERS),
+TEMPLATES[0]["OPTIONS"]["loaders"] = [
+    ("django.template.loaders.cached.Loader", RAW_TEMPLATE_LOADERS)
 ]
 
 # The file storage engine to use when collecting static files with the
@@ -57,30 +57,24 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # Production logging facility.
-LOGGING['loggers'].update({
-    '': {
-        'handlers': ['sentry'],
-        'level': 'ERROR',
-        'propagate': False,
-    },
-    'django': {
-        'handlers': ['django'],
-        'level': 'INFO',
-        'propagate': True,
-    },
-    'django.security.DisallowedHost': {
-        'handlers': ['django'],
-        'level': 'CRITICAL',
-        'propagate': False,
-    },
-})
+LOGGING["loggers"].update(
+    {
+        "": {"handlers": ["sentry"], "level": "ERROR", "propagate": False},
+        "django": {"handlers": ["django"], "level": "INFO", "propagate": True},
+        "django.security.DisallowedHost": {
+            "handlers": ["django"],
+            "level": "CRITICAL",
+            "propagate": False,
+        },
+    }
+)
 
 #
 # Custom settings
 #
 
 # Show active environment in admin.
-ENVIRONMENT = 'production'
+ENVIRONMENT = "production"
 SHOW_ALERT = False
 
 # We will assume we're running under https
@@ -92,29 +86,29 @@ CSRF_COOKIE_SECURE = True
 # X_FRAME_OPTIONS = 'DENY'
 
 # Only set this when we're behind Nginx as configured in our example-deployment
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_CONTENT_TYPE_NOSNIFF = True # Sets X-Content-Type-Options: nosniff
-SECURE_BROWSER_XSS_FILTER = True # Sets X-XSS-Protection: 1; mode=block
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Sets X-Content-Type-Options: nosniff
+SECURE_BROWSER_XSS_FILTER = True  # Sets X-XSS-Protection: 1; mode=block
 
 #
 # Library settings
 #
 
-ELASTIC_APM['SERVICE_NAME'] += ' ' + ENVIRONMENT
+ELASTIC_APM["SERVICE_NAME"] += " " + ENVIRONMENT
 
 # Raven
-INSTALLED_APPS = INSTALLED_APPS + [
-    'raven.contrib.django.raven_compat',
-]
+INSTALLED_APPS = INSTALLED_APPS + ["raven.contrib.django.raven_compat"]
 RAVEN_CONFIG = {
-    'dsn': 'https://', # https://username:password@sentry-domain/project-nr
-    'public_dsn': '', # https://username@sentry-domain/project-nr
-    'release': raven.fetch_git_sha(BASE_DIR),
+    "dsn": "https://",  # https://username:password@sentry-domain/project-nr
+    "public_dsn": "",  # https://username@sentry-domain/project-nr
+    "release": raven.fetch_git_sha(BASE_DIR),
 }
-LOGGING['handlers'].update({
-    'sentry': {
-        'level': 'WARNING',
-        'class': 'raven.handlers.logging.SentryHandler',
-        'dsn': RAVEN_CONFIG['dsn']
-    },
-})
+LOGGING["handlers"].update(
+    {
+        "sentry": {
+            "level": "WARNING",
+            "class": "raven.handlers.logging.SentryHandler",
+            "dsn": RAVEN_CONFIG["dsn"],
+        }
+    }
+)

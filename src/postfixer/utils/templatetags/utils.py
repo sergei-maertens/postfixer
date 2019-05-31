@@ -12,7 +12,7 @@ class CaptureNode(template.Node):
     def render(self, context):
         output = self.nodelist.render(context)
         context[self.var_name] = output
-        return ''
+        return ""
 
 
 @register.tag
@@ -27,10 +27,12 @@ def capture(parser, token):
         {% include 'components/text/text.html' with body=body only %}
     """
     args = token.split_contents()
-    if len(args) < 3 or args[-2] != 'as':
-        raise template.TemplateSyntaxError("'capture' tag requires a variable name after keyword 'as'.")
+    if len(args) < 3 or args[-2] != "as":
+        raise template.TemplateSyntaxError(
+            "'capture' tag requires a variable name after keyword 'as'."
+        )
     var_name = args[-1]
-    nodelist = parser.parse(('endcapture',))
+    nodelist = parser.parse(("endcapture",))
     parser.delete_first_token()
     return CaptureNode(nodelist, var_name)
 
@@ -59,4 +61,4 @@ def placekitten_src(width=800, height=600):
         {% placekitten_src 200 200 as mobile_src %}
         {% include 'components/image/image.html' with mobile_src=mobile_src src=src alt='placekitten' only %}
     """
-    return '//placekitten.com/{}/{}'.format(width, height)
+    return "//placekitten.com/{}/{}".format(width, height)
