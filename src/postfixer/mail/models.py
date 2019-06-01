@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 class Domain(models.Model):
     name = models.CharField(_("domain name"), max_length=253, unique=True)
     comments = models.TextField(_("comments"), blank=True)
+    active = models.BooleanField(_("active"), default=True)
 
     class Meta:
         verbose_name = _("domain")
@@ -18,6 +19,7 @@ class Forward(models.Model):
     source = models.CharField(_("source"), max_length=320, unique=True)
     destination = models.CharField(_("destination"), max_length=320)
     comments = models.TextField(_("comments"), blank=True)
+    active = models.BooleanField(_("active"), default=True)
 
     class Meta:
         verbose_name = _("forward")
