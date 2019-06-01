@@ -58,7 +58,7 @@ RUN npm run build
 
 
 # Stage 3 - Build docker image suitable for production
-FROM python:3.7-alpine
+FROM python:3.7-alpine AS production
 
 RUN apk --no-cache add \
     ca-certificates \
@@ -81,7 +81,6 @@ RUN mkdir /app/log
 
 # copy backend build deps
 COPY --from=backend-build /usr/local/lib/python3.7 /usr/local/lib/python3.7
-COPY --from=backend-build /app/src/ /app/src/
 COPY --from=backend-build /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 
 # copy build statics
