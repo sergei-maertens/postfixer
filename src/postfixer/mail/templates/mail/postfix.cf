@@ -1,0 +1,18 @@
+{% autoescape off %}#
+# main.cf entry:
+# {{ setting }} = pgsql:/path/to/this/file.cf
+#
+
+#
+# The hosts that Postfix will try to connect to
+hosts = {{ db.HOST }}
+
+# The user name and password to log into the pgsql server.
+user = {{ db.USER }}
+password = {{ db.PASSWORD }}
+
+# The database name on the servers.
+dbname = {{ db.NAME }}
+
+query = {{ query }}
+{% endautoescape %}
