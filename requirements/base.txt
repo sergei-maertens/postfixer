@@ -16,7 +16,7 @@ django-hijack==2.1.10
 django-ipware==2.1.0      # via django-axes
 django-redis==4.10.0
 django-sniplates==0.6.0
-django==2.2.1
+django==2.2.4
 elastic-apm==4.2.2
 pillow==6.0.0
 pip-tools==4.2.0
