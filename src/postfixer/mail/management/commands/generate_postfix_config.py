@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.management import BaseCommand
 from django.template.loader import get_template
 
-from ...models import Domain, Forward
+from ...models import Domain, Forward, VirtualMailbox
 
 
 class Command(BaseCommand):
@@ -25,7 +25,7 @@ class Command(BaseCommand):
         template = get_template(options["template_name"])
         db = settings.DATABASES[using]
 
-        # virtual domains
+        # virtual alias domains
         virtual_domains_qs = (
             Domain.objects.using(using).filter(name="'%s'", active=True).values("id")
         )
@@ -47,6 +47,28 @@ class Command(BaseCommand):
             "db": db,
             "setting": "virtual_alias_maps",
             "query": str(virtual_alias_qs.query),
+        }
+        result = template.render(context)
+        self.stdout.write(result)
+
+        # virtual mailbox domains
+        virtual_mailbox_qs = VirtualMailbox.objects.using(using).get_domain("'%s'")
+        context = {
+            "db": db,
+            "setting": "virtual_mailbox_domains",
+            "query": str(virtual_mailbox_qs.query),
+        }
+        result = template.render(context)
+        self.stdout.write(result)
+
+        # virtual mailbox maps
+        virtual_mailbox_maps_qs = VirtualMailbox.objects.using(using).get_maildir(
+            "'%s'"
+        )
+        context = {
+            "db": db,
+            "setting": "virtual_mailbox_maps",
+            "query": str(virtual_mailbox_maps_qs.query),
         }
         result = template.render(context)
         self.stdout.write(result)
