@@ -13,17 +13,7 @@ RUN apk --no-cache add \
     musl-dev \
     pcre-dev \
     linux-headers \
-    postgresql-dev \
-    # libraries installed using git
-    git \
-    # lxml dependencies
-    libxslt-dev \
-    # pillow dependencies
-    jpeg-dev \
-    openjpeg-dev \
-    zlib-dev \
-    libffi-dev
-
+    postgresql-dev
 
 WORKDIR /app
 
@@ -65,15 +55,7 @@ RUN apk --no-cache add \
     mailcap \
     musl \
     pcre \
-    postgresql \
-    # lxml dependencies
-    libxslt \
-    # pillow dependencies
-    jpeg \
-    openjpeg \
-    zlib
-
-# TODO: add nodejs for swagger2openapi conversion
+    postgresql
 
 WORKDIR /app
 COPY ./bin/docker_start.sh /start.sh

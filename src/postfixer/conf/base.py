@@ -47,9 +47,6 @@ INSTALLED_APPS = [
     # 'django.contrib.humanize',
     # 'django.contrib.sitemaps',
     # External applications.
-    # 'axes',
-    "sniplates",
-    # 'elasticapm.contrib.django',
     # Project applications.
     "postfixer.accounts",
     "postfixer.mail",
@@ -243,44 +240,6 @@ SHOW_ALERT = True
 #
 # Library settings
 #
-
-
-# Django-Admin-Index
-ADMIN_INDEX_SHOW_REMAINING_APPS = True
-ADMIN_INDEX_AUTO_CREATE_APP_GROUP = True
-
-# Django-Axes (4.0+)
-#
-# The number of login attempts allowed before a record is created for the
-# failed logins. Default: 3
-AXES_FAILURE_LIMIT = 10
-# If set, defines a period of inactivity after which old failed login attempts
-# will be forgotten. Can be set to a python timedelta object or an integer. If
-# an integer, will be interpreted as a number of hours. Default: None
-AXES_COOLOFF_TIME = 1
-# If True only locks based on user id and never locks by IP if attempts limit
-# exceed, otherwise utilize the existing IP and user locking logic Default:
-# False
-AXES_ONLY_USER_FAILURES = True
-# If set, specifies a template to render when a user is locked out. Template
-# receives cooloff_time and failure_limit as context variables. Default: None
-AXES_LOCKOUT_TEMPLATE = "account_blocked.html"
-AXES_USE_USER_AGENT = True  # Default: False
-AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True  # Default: False
-
-# The default meta precedence order
-IPWARE_META_PRECEDENCE_ORDER = (
-    "HTTP_X_FORWARDED_FOR",
-    "X_FORWARDED_FOR",  # <client>, <proxy1>, <proxy2>
-    "HTTP_CLIENT_IP",
-    "HTTP_X_REAL_IP",
-    "HTTP_X_FORWARDED",
-    "HTTP_X_CLUSTER_CLIENT_IP",
-    "HTTP_FORWARDED_FOR",
-    "HTTP_FORWARDED",
-    "HTTP_VIA",
-    "REMOTE_ADDR",
-)
 
 # Raven
 SENTRY_DSN = os.getenv("SENTRY_DSN")
