@@ -1,31 +1,26 @@
 from django.contrib import admin
 
-from .models import Domain, Forward, VirtualMailbox
+from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
+
+from .models import EmailPartsMixin as EmailPartsModelMixin, Forward, VirtualMailbox
 
 
-@admin.register(Domain)
-class DomainAdmin(admin.ModelAdmin):
-    list_display = ("name", "comments", "active")
-    list_filter = ("active",)
-    search_fields = ("name",)
-    ordering = ("name",)
-
-
-@admin.register(Forward)
-class ForwardAdmin(admin.ModelAdmin):
-    list_display = ("source", "destination", "comments", "active")
-    list_filter = ("active",)
-    search_fields = ("source", "destination")
-    ordering = ("source",)
-
-
-@admin.register(VirtualMailbox)
-class VirtualMailboxAdmin(admin.ModelAdmin):
-    list_display = ("email", "active")
-    list_filter = ("active", "domain_part")
-
+class EmailPartsMixin:
     def get_queryset(self, request=None):
         return super().get_queryset(request=request).annotate_email()
 
-    def email(self, obj: VirtualMailbox) -> str:
+    def email(self, obj: EmailPartsModelMixin) -> str:
         return obj.email
+
+
+@admin.register(Forward)
+class ForwardAdmin(EmailPartsMixin, DynamicArrayMixin, admin.ModelAdmin):
+    list_display = ("email", "destinations", "comments", "active")
+    list_filter = ("active", "domain_part")
+    ordering = ("domain_part", "user_part")
+
+
+@admin.register(VirtualMailbox)
+class VirtualMailboxAdmin(EmailPartsMixin, admin.ModelAdmin):
+    list_display = ("email", "active")
+    list_filter = ("active", "domain_part")

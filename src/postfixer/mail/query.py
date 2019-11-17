@@ -3,7 +3,7 @@ from django.db.models import EmailField, Value
 from django.db.models.functions import Concat
 
 
-class VirtualMailboxQuerySet(models.QuerySet):
+class EmailAnnotationMixin:
     def annotate_email(self):
         return self.annotate(
             email=Concat(
@@ -11,6 +11,12 @@ class VirtualMailboxQuerySet(models.QuerySet):
             )
         )
 
+
+class ForwardQuerySet(EmailAnnotationMixin, models.QuerySet):
+    pass
+
+
+class VirtualMailboxQuerySet(EmailAnnotationMixin, models.QuerySet):
     def get_maildir(self, email: str) -> models.QuerySet:
         mailboxes = (
             self.annotate_email()

@@ -16,6 +16,7 @@ click==7.0
 coverage==4.5.3
 cssselect==1.0.3          # via pyquery
 curtsies==0.3.0           # via bpython
+django-better-admin-arrayfield==1.0.4
 django-debug-toolbar==1.11
 django-webtest==1.9.4
 django==2.2.1

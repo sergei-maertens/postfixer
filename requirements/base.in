@@ -6,3 +6,4 @@ python-dotenv
 uwsgi
 
 Django
+django-better-admin-arrayfield
