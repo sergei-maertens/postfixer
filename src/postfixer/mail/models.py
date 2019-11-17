@@ -99,3 +99,9 @@ class VirtualMailbox(EmailPartsMixin, models.Model):
                 fields=["user_part", "domain_part"], name="unique_mailbox_email",
             )
         ]
+
+
+def get_domain(domain: str) -> models.QuerySet:
+    aliases = Forward.objects.get_domain(domain)
+    mailboxes = VirtualMailbox.objects.get_domain(domain)
+    return aliases.union(mailboxes)

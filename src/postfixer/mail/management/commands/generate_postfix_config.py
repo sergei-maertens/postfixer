@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.management import BaseCommand
 from django.template.loader import get_template
 
-from ...models import Forward, VirtualMailbox
+from ...models import Forward, VirtualMailbox, get_domain
 
 
 class Command(BaseCommand):
@@ -30,11 +30,7 @@ class Command(BaseCommand):
         # in fact, postfix complains about having the domain in both
 
         # virtual aliases
-        virtual_alias_qs = (
-            Forward.objects.using(using)
-            .filter(source="'%s'", active=True)
-            .values("destination")
-        )
+        virtual_alias_qs = Forward.objects.using(using).get_forwards("'%s'")
         context = {
             "db": db,
             "setting": "virtual_alias_maps",
@@ -44,7 +40,7 @@ class Command(BaseCommand):
         self.stdout.write(result)
 
         # virtual mailbox domains
-        virtual_mailbox_qs = VirtualMailbox.objects.using(using).get_domain("'%s'")
+        virtual_mailbox_qs = get_domain("'%s'")
         context = {
             "db": db,
             "setting": "virtual_mailbox_domains",
