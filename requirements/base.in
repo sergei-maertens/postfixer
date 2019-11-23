@@ -2,6 +2,7 @@ pip-tools
 psycopg2
 pytz
 raven
+passlib
 python-dotenv
 uwsgi
 

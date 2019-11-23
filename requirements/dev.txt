@@ -28,6 +28,7 @@ idna==2.8                 # via requests
 isort==4.3.20
 lxml==4.3.3               # via pyquery
 mock==3.0.5
+passlib==1.7.2
 pathspec==0.6.0           # via black
 pip-tools==4.2.0
 psycopg2==2.8.2

@@ -25,6 +25,9 @@ class EmailPartsMixin:
             return self.email
         return "@".join([self.user_part, self.domain_part])
 
+    def set_email(self, email: str) -> None:
+        self.user_part, self.domain_part = email.rsplit("@")
+
 
 class Forward(EmailPartsMixin, models.Model):
     user_part = models.CharField(
