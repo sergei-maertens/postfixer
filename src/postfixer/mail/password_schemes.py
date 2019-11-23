@@ -27,7 +27,7 @@ SCHEMES = {
 assert DEFAULT in SCHEMES
 
 
-def hash_password(password: str, scheme: str) -> str:
+def hash_password(password: str, scheme: str = DEFAULT) -> str:
     try:
         algorithm = SCHEMES[scheme]
     except KeyError:
