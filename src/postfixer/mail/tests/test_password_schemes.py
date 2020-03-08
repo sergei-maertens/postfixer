@@ -28,6 +28,5 @@ class PasswordSchemesTests(SimpleTestCase):
 
     def test_sha512_bcrypt(self):
         hashed = hash_password("dummy", scheme="SHA512-CRYPT")
-        print(hashed)
         self.assertTrue(hashed.startswith("{SHA512-CRYPT}$6$"))
         self.assertTrue(check_password("dummy", hashed))

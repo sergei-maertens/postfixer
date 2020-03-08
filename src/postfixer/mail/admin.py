@@ -40,7 +40,7 @@ class VirtualMailboxAdmin(EmailPartsMixin, admin.ModelAdmin):
     form = VirtualMailboxChangeForm
     add_form = VirtualMailboxAddForm
     change_password_form = AdminPasswordChangeForm
-    change_mailbox_password_template = None
+    change_mailbox_password_template = "admin/mailbox/change_password.html"
 
     def get_form(self, request, obj=None, **kwargs):
         """
