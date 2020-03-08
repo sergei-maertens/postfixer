@@ -1,12 +1,15 @@
 from django import forms
 from django.contrib.auth.forms import (
-    AdminPasswordChangeForm as _AdminPasswordChangeForm
+    AdminPasswordChangeForm as _AdminPasswordChangeForm,
 )
 from django.utils.translation import ugettext_lazy as _
 
 from .models import VirtualMailbox
 from .password_schemes import (
-    DEFAULT as DEFAULT_SCHEME, SCHEMES, hash_password, identify_hasher
+    DEFAULT as DEFAULT_SCHEME,
+    SCHEMES,
+    hash_password,
+    identify_hasher,
 )
 
 
