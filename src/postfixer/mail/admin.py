@@ -12,7 +12,9 @@ from django.utils.translation import gettext, ugettext_lazy as _
 from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 
 from .forms import (
-    AdminPasswordChangeForm, VirtualMailboxAddForm, VirtualMailboxChangeForm
+    AdminPasswordChangeForm,
+    VirtualMailboxAddForm,
+    VirtualMailboxChangeForm,
 )
 from .models import EmailPartsMixin as EmailPartsModelMixin, Forward, VirtualMailbox
 
@@ -40,7 +42,7 @@ class VirtualMailboxAdmin(EmailPartsMixin, admin.ModelAdmin):
     form = VirtualMailboxChangeForm
     add_form = VirtualMailboxAddForm
     change_password_form = AdminPasswordChangeForm
-    change_mailbox_password_template = None
+    change_mailbox_password_template = "admin/mailbox/change_password.html"
 
     def get_form(self, request, obj=None, **kwargs):
         """
