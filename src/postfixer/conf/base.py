@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # External applications.
     # Project applications.
     "postfixer.accounts",
+    "postfixer.certificates",
     "postfixer.mail",
     "postfixer.utils",
 ]

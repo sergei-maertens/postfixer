@@ -6,5 +6,8 @@ passlib
 python-dotenv
 uwsgi
 
+cryptography
+dnsutils
+
 Django
 django-better-admin-arrayfield
