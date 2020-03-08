@@ -4,15 +4,19 @@
 #
 #    pip-compile --no-index requirements/base.in
 #
+cffi==1.14.0              # via cryptography
 click==7.0                # via pip-tools
+cryptography==2.8
 django-better-admin-arrayfield==1.0.4
 django==2.2.11
+dnspython==1.16.0
 passlib==1.7.2
 pip-tools==4.2.0
 psycopg2==2.8.2
+pycparser==2.20           # via cffi
 python-dotenv==0.10.2
 pytz==2019.1
 raven==6.10.0
-six==1.12.0               # via pip-tools
+six==1.12.0               # via cryptography, pip-tools
 sqlparse==0.3.0           # via django
 uwsgi==2.0.18

@@ -7,7 +7,7 @@ python-dotenv
 uwsgi
 
 cryptography
-dnsutils
+dnspython
 
 Django
 django-better-admin-arrayfield
