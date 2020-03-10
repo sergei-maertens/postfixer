@@ -13,7 +13,8 @@ RUN apk --no-cache add \
     musl-dev \
     pcre-dev \
     linux-headers \
-    postgresql-dev
+    postgresql-dev \
+    libffi-dev
 
 WORKDIR /app
 
@@ -55,7 +56,8 @@ RUN apk --no-cache add \
     mailcap \
     musl \
     pcre \
-    postgresql
+    postgresql \
+    libffi
 
 WORKDIR /app
 COPY ./bin/docker_start.sh /start.sh
