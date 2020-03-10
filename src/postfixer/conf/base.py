@@ -269,3 +269,9 @@ ELASTIC_APM = {
     "SECRET_TOKEN": os.getenv("ELASTIC_APM_SECRET_TOKEN", "default"),
     "SERVER_URL": os.getenv("ELASTIC_APM_SERVER_URL", "http://example.com"),
 }
+
+CERTBOT_BINARY = os.getenv(
+    "CERTBOT_BINARY", os.path.join(BASE_DIR, "bin", "certbot-auto-mock")
+)
+CERTBOT_PLUGIN = os.getenv("CERTBOT_PLUGIN", "nginx")
+CERTBOT_CERTS_DIR = os.getenv("CERTBOT_CERTS_DIR", "/etc/letsencrypt/live/")
