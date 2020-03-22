@@ -40,7 +40,7 @@ def hash_password(password: str, scheme: str = DEFAULT) -> str:
 def identify_hasher(hashed: str) -> Tuple[GenericHandler, str]:
     # no explicit algorithm -> use the default
     if not hashed.startswith("{"):
-        return SCHEMES[DEFAULT]
+        return SCHEMES[DEFAULT], hashed
 
     if "}" not in hashed:
         raise ValueError(f"Can't determine scheme for hash {hashed}")
