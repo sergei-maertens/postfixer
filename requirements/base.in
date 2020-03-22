@@ -1,21 +1,10 @@
 pip-tools
 psycopg2
-Pillow
 pytz
 raven
+passlib
 python-dotenv
+uwsgi
 
 Django
-django-hijack
-django-hijack-admin
-django-axes
-django-choices
-django-sniplates
-django-redis
-
-# djangorestframework
-
-# For Elastic APM integration
-elastic-apm
-cachetools
-
+django-better-admin-arrayfield

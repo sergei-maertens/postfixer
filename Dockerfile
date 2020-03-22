@@ -13,17 +13,7 @@ RUN apk --no-cache add \
     musl-dev \
     pcre-dev \
     linux-headers \
-    postgresql-dev \
-    # libraries installed using git
-    git \
-    # lxml dependencies
-    libxslt-dev \
-    # pillow dependencies
-    jpeg-dev \
-    openjpeg-dev \
-    zlib-dev \
-    libffi-dev
-
+    postgresql-dev
 
 WORKDIR /app
 
@@ -34,27 +24,27 @@ COPY ./requirements /app/requirements
 RUN pip install -r requirements/production.txt
 
 
-# Stage 2 - Install frontend deps and build assets
-FROM mhart/alpine-node:10 AS frontend-build
+# # Stage 2 - Install frontend deps and build assets
+# FROM mhart/alpine-node:10 AS frontend-build
 
-RUN apk --no-cache add \
-    git
+# RUN apk --no-cache add \
+#     git
 
-WORKDIR /app
+# WORKDIR /app
 
-# copy configuration/build files
-COPY ./*.json /app/
-COPY ./*.js /app/
-COPY ./build /app/build/
+# # copy configuration/build files
+# COPY ./*.json /app/
+# COPY ./*.js /app/
+# COPY ./build /app/build/
 
-# install WITH dev tooling
-RUN npm install
+# # install WITH dev tooling
+# RUN npm install
 
-# copy source code
-COPY ./src /app/src
+# # copy source code
+# COPY ./src /app/src
 
-# build frontend
-RUN npm run build
+# # build frontend
+# RUN npm run build
 
 
 # Stage 3 - Build docker image suitable for production
@@ -65,15 +55,7 @@ RUN apk --no-cache add \
     mailcap \
     musl \
     pcre \
-    postgresql \
-    # lxml dependencies
-    libxslt \
-    # pillow dependencies
-    jpeg \
-    openjpeg \
-    zlib
-
-# TODO: add nodejs for swagger2openapi conversion
+    postgresql
 
 WORKDIR /app
 COPY ./bin/docker_start.sh /start.sh
@@ -84,7 +66,7 @@ COPY --from=backend-build /usr/local/lib/python3.7 /usr/local/lib/python3.7
 COPY --from=backend-build /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 
 # copy build statics
-COPY --from=frontend-build /app/src/postfixer/static /app/src/postfixer/static
+# COPY --from=frontend-build /app/src/postfixer/static /app/src/postfixer/static
 
 
 # copy source code
