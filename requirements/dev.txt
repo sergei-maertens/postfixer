@@ -11,15 +11,18 @@ black==19.10b0
 blessings==1.7            # via curtsies
 bpython==0.18
 certifi==2019.3.9         # via requests
+cffi==1.14.0
 chardet==3.0.4            # via requests
 click==7.0
 coverage==4.5.3
+cryptography==2.8
 cssselect==1.0.3          # via pyquery
 curtsies==0.3.0           # via bpython
 django-better-admin-arrayfield==1.0.4
 django-debug-toolbar==1.11
 django-webtest==1.9.4
 django==2.2.11
+dnspython==1.16.0
 factory-boy==2.12.0
 faker==1.0.7              # via factory-boy
 freezegun==0.3.12
@@ -32,6 +35,7 @@ passlib==1.7.2
 pathspec==0.6.0           # via black
 pip-tools==4.2.0
 psycopg2==2.8.2
+pycparser==2.20
 pygments==2.4.2           # via bpython
 pyquery==1.4.0
 python-dateutil==2.8.0    # via faker, freezegun

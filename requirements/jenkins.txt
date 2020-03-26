@@ -5,13 +5,16 @@
 #    pip-compile --no-index --output-file=requirements/jenkins.txt requirements/base.txt requirements/jenkins.in requirements/testing.in
 #
 beautifulsoup4==4.7.1     # via webtest
+cffi==1.14.0
 click==7.0
 coverage==4.5.3
+cryptography==2.8
 cssselect==1.0.3          # via pyquery
 django-better-admin-arrayfield==1.0.4
 django-jenkins==0.110.0
 django-webtest==1.9.4
 django==2.2.11
+dnspython==1.16.0
 factory-boy==2.12.0
 faker==1.0.7              # via factory-boy
 freezegun==0.3.12
@@ -21,6 +24,7 @@ mock==3.0.5
 passlib==1.7.2
 pip-tools==4.2.0
 psycopg2==2.8.2
+pycparser==2.20
 pyquery==1.4.0
 python-dateutil==2.8.0    # via faker, freezegun
 python-dotenv==0.10.2
