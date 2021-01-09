@@ -8,6 +8,7 @@ services:
     image: postgres
   web:
     build: .
+    image: docker.io/regexit/postfixer:${TAG:-latest}
     environment:
       - DJANGO_SETTINGS_MODULE=postfixer.conf.docker
       - SECRET_KEY=${SECRET_KEY:-@#^@cohoj8&f3-jyr^85@k%!hb*4y+bb49@x!bp8v9i6lndd==}
@@ -15,22 +16,3 @@ services:
       - 8000:8000
     depends_on:
       - db
-
-  # See: src/postfixer/conf/docker.py
-  # Optional containers below:
-#  elasticsearch:
-#    # NOTE: No persistance storage configured.
-#    # See: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
-#    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
-#    container_name: elasticsearch
-#    environment:
-#      - discovery.type=single-node
-#      - cluster.routing.allocation.disk.threshold_enabled=false
-#    ports:
-#      - 9200:9200
-#  redis:
-#    # NOTE: No persistance storage configured.
-#    # See: https://hub.docker.com/_/redis/
-#    image: redis
-#    ports:
-#        - 6379:6379

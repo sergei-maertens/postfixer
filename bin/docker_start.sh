@@ -21,7 +21,7 @@ python src/manage.py migrate
 
 # Start server
 >&2 echo "Starting server"
-uwsgi \
+exec uwsgi \
     --http :8000 \
     --module postfixer.wsgi \
     --static-map /static=/app/static \
