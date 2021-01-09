@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import EmailField, Value
 from django.db.models.functions import Concat
@@ -32,3 +33,11 @@ class VirtualMailboxQuerySet(EmailAnnotationMixin, models.QuerySet):
             .filter(active=True, email=email)
         )
         return mailboxes.values_list("maildir", flat=True)
+
+
+class LimitedManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if not settings.LIMIT_DOMAINS_TO:
+            return qs
+        return qs.filter(domain_part__in=settings.LIMIT_DOMAINS_TO)
