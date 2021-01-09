@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django_better_admin_arrayfield.models.fields import ArrayField
 
-from .query import ForwardQuerySet, VirtualMailboxQuerySet
+from .query import ForwardQuerySet, LimitedManager, VirtualMailboxQuerySet
 from .validators import validate_lowercase
 
 
@@ -50,7 +50,7 @@ class Forward(EmailPartsMixin, models.Model):
     comments = models.TextField(_("comments"), blank=True)
     active = models.BooleanField(_("active"), default=True)
 
-    objects = ForwardQuerySet.as_manager()
+    objects = LimitedManager.from_queryset(ForwardQuerySet)()
 
     class Meta:
         verbose_name = _("forward")
@@ -92,7 +92,7 @@ class VirtualMailbox(EmailPartsMixin, models.Model):
     comments = models.TextField(_("comments"), blank=True)
     active = models.BooleanField(_("active"), default=True)
 
-    objects = VirtualMailboxQuerySet.as_manager()
+    objects = LimitedManager.from_queryset(VirtualMailboxQuerySet)()
 
     class Meta:
         verbose_name = _("virtual mailbox")

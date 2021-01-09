@@ -237,6 +237,10 @@ PROJECT_NAME = "postfixer"
 ENVIRONMENT = None
 SHOW_ALERT = True
 
+LIMIT_DOMAINS_TO = [
+    domain.strip() for domain in os.getenv("LIMIT_DOMAINS_TO", "").split(",")
+]
+
 #
 # Library settings
 #
