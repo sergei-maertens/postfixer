@@ -11,6 +11,7 @@ from .password_schemes import (
     hash_password,
     identify_hasher,
 )
+from .validators import validate_email_domain
 
 
 class AdminPasswordChangeForm(_AdminPasswordChangeForm):
@@ -54,7 +55,9 @@ class VirtualMailboxAddForm(forms.ModelForm):
     error_messages = {
         "password_mismatch": _("The two password fields didn't match."),
     }
-    email = forms.EmailField(label=_("E-mail address"))
+    email = forms.EmailField(
+        label=_("E-mail address"), validators=[validate_email_domain],
+    )
     password1 = forms.CharField(
         label=_("Password"), strip=False, widget=forms.PasswordInput,
     )

@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_better_admin_arrayfield.models.fields import ArrayField
 
 from .query import ForwardQuerySet, LimitedManager, VirtualMailboxQuerySet
-from .validators import validate_lowercase
+from .validators import validate_allowed_domain, validate_lowercase
 
 
 class EmailPartsMixin:
@@ -44,6 +44,7 @@ class Forward(EmailPartsMixin, models.Model):
         validators=[
             validate_lowercase,
             RegexValidator(regex=EmailValidator.domain_regex),
+            validate_allowed_domain,
         ],
     )
     destinations = ArrayField(models.CharField(_("destination"), max_length=320),)
@@ -86,6 +87,7 @@ class VirtualMailbox(EmailPartsMixin, models.Model):
         validators=[
             validate_lowercase,
             RegexValidator(regex=EmailValidator.domain_regex),
+            validate_allowed_domain,
         ],
     )
     password = models.CharField(_("password"), max_length=255, blank=True)
