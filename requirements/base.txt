@@ -4,15 +4,30 @@
 #
 #    pip-compile --no-index requirements/base.in
 #
-click==7.0                # via pip-tools
+click==7.0
+    # via pip-tools
 django-better-admin-arrayfield==1.0.4
-django==2.2.11
+    # via -r requirements/base.in
+django==2.2.17
+    # via -r requirements/base.in
 passlib==1.7.2
-pip-tools==4.2.0
+    # via -r requirements/base.in
+pip-tools==5.5.0
+    # via -r requirements/base.in
 psycopg2==2.8.2
+    # via -r requirements/base.in
 python-dotenv==0.10.2
+    # via -r requirements/base.in
 pytz==2019.1
+    # via
+    #   -r requirements/base.in
+    #   django
 raven==6.10.0
-six==1.12.0               # via pip-tools
-sqlparse==0.3.0           # via django
+    # via -r requirements/base.in
+sqlparse==0.3.0
+    # via django
 uwsgi==2.0.18
+    # via -r requirements/base.in
+
+# The following packages are considered to be unsafe in a requirements file:
+# pip
