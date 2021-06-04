@@ -4,15 +4,29 @@
 #
 #    pip-compile --no-index requirements/base.in
 #
-click==7.0                # via pip-tools
+click==7.0
+    # via pip-tools
 django-better-admin-arrayfield==1.0.4
-django==2.2.11
+    # via -r base.in
+django==2.2.21
+    # via -r base.in
 passlib==1.7.2
+    # via -r base.in
 pip-tools==4.2.0
+    # via -r base.in
 psycopg2==2.8.2
+    # via -r base.in
 python-dotenv==0.10.2
+    # via -r base.in
 pytz==2019.1
+    # via
+    #   -r base.in
+    #   django
 raven==6.10.0
-six==1.12.0               # via pip-tools
-sqlparse==0.3.0           # via django
+    # via -r base.in
+six==1.12.0
+    # via pip-tools
+sqlparse==0.3.0
+    # via django
 uwsgi==2.0.18
+    # via -r base.in
