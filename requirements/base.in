@@ -6,5 +6,5 @@ passlib
 python-dotenv
 uwsgi
 
-Django
+Django~=2.2.0
 django-better-admin-arrayfield
