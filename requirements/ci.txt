@@ -20,6 +20,8 @@ django-webtest==1.9.7
     # via -r requirements/test-tools.in
 django==2.2.24
     # via -r requirements/base.txt
+dnspython==2.1.0
+    # via -r requirements/base.txt
 factory-boy==3.2.0
     # via -r requirements/test-tools.in
 faker==8.10.1

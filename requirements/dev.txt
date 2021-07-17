@@ -45,6 +45,8 @@ django==2.2.24
     # via
     #   -r requirements/ci.txt
     #   django-debug-toolbar
+dnspython==2.1.0
+    # via -r requirements/ci.txt
 factory-boy==3.2.0
     # via -r requirements/ci.txt
 faker==8.10.1

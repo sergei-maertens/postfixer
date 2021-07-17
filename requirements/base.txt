@@ -10,6 +10,8 @@ django-better-admin-arrayfield==1.0.4
     # via -r requirements/base.in
 django==2.2.24
     # via -r requirements/base.in
+dnspython==2.1.0
+    # via -r requirements/base.in
 passlib==1.7.2
     # via -r requirements/base.in
 pip-tools==5.5.0
