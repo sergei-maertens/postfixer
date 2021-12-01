@@ -237,9 +237,10 @@ PROJECT_NAME = "postfixer"
 ENVIRONMENT = None
 SHOW_ALERT = True
 
-LIMIT_DOMAINS_TO = [
-    domain.strip() for domain in os.getenv("LIMIT_DOMAINS_TO", "").split(",")
-]
+_LIMIT_DOMAINS = os.getenv("LIMIT_DOMAINS_TO", "")
+LIMIT_DOMAINS_TO = (
+    [domain.strip() for domain in _LIMIT_DOMAINS.split(",")] if _LIMIT_DOMAINS else []
+)
 
 #
 # Library settings
