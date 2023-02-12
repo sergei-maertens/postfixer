@@ -10,13 +10,14 @@ they are available for Django settings initialization.
     before Django is initialized.
 """
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 
 def setup_env():
     # load the environment variables containing the secrets/config
-    dotenv_path = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, ".env")
+    dotenv_path = Path(__file__).resolve().parent.parent.parent / ".env"
     load_dotenv(dotenv_path)
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "postfixer.conf.dev")

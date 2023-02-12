@@ -50,30 +50,6 @@ if subpath:
     STATIC_URL = f"{FORCE_SCRIPT_NAME}{STATIC_URL}"
     MEDIA_URL = f"{FORCE_SCRIPT_NAME}{MEDIA_URL}"
 
-# See: docker-compose.yml
-# Optional Docker container usage below:
-#
-# # Elasticsearch
-# HAYSTACK_CONNECTIONS = {
-#     'default': {
-#         'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
-#         'URL': getenv('ELASTICSEARCH_URL', 'http://elasticsearch:9200/'),
-#         'INDEX_NAME': 'postfixer',
-#     },
-# }
-#
-# # Caching
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django_redis.cache.RedisCache',
-#         'LOCATION': getenv('CACHE_LOCATION', 'redis://redis:6379/1'),
-#         'OPTIONS': {
-#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#             'IGNORE_EXCEPTIONS': True,
-#         }
-#     }
-# }
-
 #
 # Additional Django settings
 #
@@ -87,8 +63,6 @@ CSRF_COOKIE_SECURE = getenv("CSRF_COOKIE_SECURE", False)
 # Custom settings
 #
 ENVIRONMENT = "docker"
-
-ELASTIC_APM["SERVICE_NAME"] += " " + ENVIRONMENT
 
 if missing_environment_vars:
     raise ImproperlyConfigured(

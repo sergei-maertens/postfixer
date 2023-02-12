@@ -6,79 +6,79 @@
 # Stage 1 - Backend build environment
 # includes compilers and build tooling to create the environment
 
-FROM python:3.7-alpine AS backend-build
+FROM python:3.10-slim-bullseye AS backend-build
 
-RUN apk --no-cache add \
-    gcc \
-    musl-dev \
-    pcre-dev \
-    linux-headers \
-    postgresql-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        pkg-config \
+        build-essential \
+        libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+RUN mkdir /app/src
 
 # Ensure we use the latest version of pip
 RUN pip install pip setuptools -U
-
 COPY ./requirements /app/requirements
 RUN pip install -r requirements/production.txt
 
 
-# # Stage 2 - Install frontend deps and build assets
-# FROM mhart/alpine-node:10 AS frontend-build
-
-# RUN apk --no-cache add \
-#     git
-
-# WORKDIR /app
-
-# # copy configuration/build files
-# COPY ./*.json /app/
-# COPY ./*.js /app/
-# COPY ./build /app/build/
-
-# # install WITH dev tooling
-# RUN npm install
-
-# # copy source code
-# COPY ./src /app/src
-
-# # build frontend
-# RUN npm run build
-
-
 # Stage 3 - Build docker image suitable for production
-FROM python:3.7-alpine AS production
+FROM python:3.10-slim-bullseye
 
-RUN apk --no-cache add \
-    ca-certificates \
-    mailcap \
-    musl \
-    pcre \
-    postgresql
+# Stage 3.1 - Set up the needed production dependencies
+# install all the dependencies for GeoDjango
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        procps \
+        vim \
+        mime-support \
+        postgresql-client \
+        gettext \
+        # lxml deps
+        # libxslt \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY ./bin/docker_start.sh /start.sh
+
+# Uncomment if you use celery
+# COPY ./bin/celery_worker.sh /celery_worker.sh
+# COPY ./bin/celery_beat.sh /celery_beat.sh
+# COPY ./bin/celery_flower.sh /celery_flower.sh
 RUN mkdir /app/log
+RUN mkdir /app/media
+
+VOLUME ["/app/log", "/app/media"]
 
 # copy backend build deps
-COPY --from=backend-build /usr/local/lib/python3.7 /usr/local/lib/python3.7
+COPY --from=backend-build /usr/local/lib/python3.10 /usr/local/lib/python3.10
 COPY --from=backend-build /usr/local/bin/uwsgi /usr/local/bin/uwsgi
-
-# copy build statics
-# COPY --from=frontend-build /app/src/postfixer/static /app/src/postfixer/static
-
+# Uncomment if you use celery
+# COPY --from=backend-build /usr/local/bin/celery /usr/local/bin/celery
 
 # copy source code
 COPY ./src /app/src
-RUN mkdir /app/media
 
-ENV DJANGO_SETTINGS_MODULE=postfixer.conf.docker
+RUN useradd -M -u 1000 regex
+RUN chown -R regex:regex /app
+
+# drop privileges
+USER regex
+
+ARG COMMIT_HASH
+ARG RELEASE=latest
+
+ENV RELEASE=${RELEASE} \
+    GIT_SHA=${COMMIT_HASH} \
+    PYTHONUNBUFFERED=1 \
+    DJANGO_SETTINGS_MODULE=postfixer.conf.docker
 
 ARG SECRET_KEY=dummy
 
-# Run collectstatic, so the result is already included in the image
-RUN python src/manage.py collectstatic --noinput
+# Run collectstatic and compilemessages, so the result is already included in
+# the image
+RUN python src/manage.py collectstatic --noinput \
+    && python src/manage.py compilemessages
 
 EXPOSE 8000
 CMD ["/start.sh"]

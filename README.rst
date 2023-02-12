@@ -5,7 +5,7 @@ Postfixer
 :Version: 0.1.0
 :Source: https://github.com/sergei-maertens/postfixer
 :Keywords: postfix, mail, dkim, virtual mailboxes
-:PythonVersion: 3.7
+:PythonVersion: 3.10
 
 A project to manage Postfix (and Dovecot) virtual domains, aliases and
 mailboxes.

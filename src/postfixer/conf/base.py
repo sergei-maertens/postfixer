@@ -30,6 +30,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -265,11 +267,3 @@ if SENTRY_DSN:
             }
         }
     )
-
-# Elastic APM
-
-ELASTIC_APM = {
-    "SERVICE_NAME": "postfixer",
-    "SECRET_TOKEN": os.getenv("ELASTIC_APM_SECRET_TOKEN", "default"),
-    "SERVER_URL": os.getenv("ELASTIC_APM_SERVER_URL", "http://example.com"),
-}

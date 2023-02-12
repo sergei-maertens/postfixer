@@ -1,5 +1,8 @@
 -c ci.txt
 
+# Typing
+django-stubs
+
 # Helpers
 pip-tools
 gitpython
