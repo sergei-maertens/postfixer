@@ -1,3 +1,9 @@
+-c ci.txt
+
+# Helpers
+pip-tools
+gitpython
+
+# Debug tooling
 django-debug-toolbar
-black
-bpython
+django-extensions

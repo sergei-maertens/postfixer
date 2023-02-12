@@ -1,11 +1,14 @@
-pip-tools
+# Core python libraries
 psycopg2
 pytz
-raven
 passlib
 python-dotenv
-uwsgi
 dnspython
 
-Django~=2.2.0
+# Framework libraries
+Django~=3.2.0
 django-better-admin-arrayfield
+
+# WSGI servers & monitoring - production oriented
+uwsgi
+raven
