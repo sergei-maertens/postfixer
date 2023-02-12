@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Project applications.
     "postfixer.accounts",
     "postfixer.mail",
+    "postfixer.dkim",
     "postfixer.utils",
 ]
 
