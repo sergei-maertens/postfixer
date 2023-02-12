@@ -67,7 +67,7 @@ python-dotenv==0.10.2
     # via
     #   -c requirements/base.txt
     #   -r requirements/base.txt
-pytz==2021.1
+pytz==2022.7.1
     # via
     #   -c requirements/base.txt
     #   -r requirements/base.txt
