@@ -1,9 +1,10 @@
 # Core python libraries
-psycopg2
-pytz
-passlib
-python-dotenv
+cryptography
 dnspython
+passlib
+psycopg2
+python-dotenv
+pytz
 
 # Framework libraries
 Django~=3.2.0

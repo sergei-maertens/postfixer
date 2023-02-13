@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .validators import validate_private_key
+
 
 class SigningAlgorithms(models.TextChoices):
     """
@@ -48,6 +50,7 @@ class DKIMKey(models.Model):
     private_key = models.TextField(
         _("private key"),
         help_text=_("Private key, in PEM format."),
+        validators=[validate_private_key],
     )
     public_key = models.TextField(
         _("public key"),

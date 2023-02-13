@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .forms import DKIMKeyForm
 from .models import DKIMKey
 
 
@@ -9,3 +10,4 @@ class DKIMKeyAdmin(admin.ModelAdmin):
     list_filter = ("domain_name", "signing_algorithm")
     search_fields = ("selector", "domain_name")
     readonly_fields = ("txt_record",)
+    form = DKIMKeyForm
