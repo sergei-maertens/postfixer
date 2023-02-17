@@ -14,7 +14,9 @@ class QueryTests(TestCase):
         maildirs = VirtualMailbox.objects.get_maildir("info@regex-it.nl")
 
         self.assertQuerysetEqual(
-            maildirs, ["regex-it.nl/info/"], transform=identity,
+            maildirs,
+            ["regex-it.nl/info/"],
+            transform=identity,
         )
 
     def test_virtual_mailbox_domain(self):
@@ -23,7 +25,9 @@ class QueryTests(TestCase):
         domains = VirtualMailbox.objects.get_domain("regex-it.nl")
 
         self.assertQuerysetEqual(
-            domains, ["regex-it.nl"], transform=identity,
+            domains,
+            ["regex-it.nl"],
+            transform=identity,
         )
 
     def test_merge_domains(self):

@@ -11,13 +11,14 @@ import postfixer.mail.validators
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("mail", "0003_auto_20191112_0848"),
     ]
 
     operations = [
-        migrations.DeleteModel(name="Domain",),
+        migrations.DeleteModel(
+            name="Domain",
+        ),
         migrations.AddField(
             model_name="forward",
             name="destinations",

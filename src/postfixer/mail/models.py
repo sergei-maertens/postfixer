@@ -47,7 +47,9 @@ class Forward(EmailPartsMixin, models.Model):
             validate_allowed_domain,
         ],
     )
-    destinations = ArrayField(models.CharField(_("destination"), max_length=320),)
+    destinations = ArrayField(
+        models.CharField(_("destination"), max_length=320),
+    )
     comments = models.TextField(_("comments"), blank=True)
     active = models.BooleanField(_("active"), default=True)
 
@@ -58,7 +60,8 @@ class Forward(EmailPartsMixin, models.Model):
         verbose_name_plural = _("forwards")
         constraints = [
             models.UniqueConstraint(
-                fields=["user_part", "domain_part"], name="unique_forward_email",
+                fields=["user_part", "domain_part"],
+                name="unique_forward_email",
             )
         ]
 
@@ -101,7 +104,8 @@ class VirtualMailbox(EmailPartsMixin, models.Model):
         verbose_name_plural = _("virtual mailboxes")
         constraints = [
             models.UniqueConstraint(
-                fields=["user_part", "domain_part"], name="unique_mailbox_email",
+                fields=["user_part", "domain_part"],
+                name="unique_mailbox_email",
             )
         ]
 

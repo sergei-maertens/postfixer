@@ -60,7 +60,9 @@ class Command(BaseCommand):
         extra = " ".join([f"-d {domain}" for domain in mx_domains])
 
         cmd = CMD.format(
-            certbot=options["certbot"], plugin=options["plugin"], extra=extra,
+            certbot=options["certbot"],
+            plugin=options["plugin"],
+            extra=extra,
         )
 
         self.stdout.write(cmd)

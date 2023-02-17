@@ -4,36 +4,63 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Domain',
+            name="Domain",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=253, unique=True, verbose_name='domain name')),
-                ('comments', models.TextField(blank=True, verbose_name='comments')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        max_length=253, unique=True, verbose_name="domain name"
+                    ),
+                ),
+                ("comments", models.TextField(blank=True, verbose_name="comments")),
             ],
             options={
-                'verbose_name': 'domain',
-                'verbose_name_plural': 'domains',
+                "verbose_name": "domain",
+                "verbose_name_plural": "domains",
             },
         ),
         migrations.CreateModel(
-            name='Forward',
+            name="Forward",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('source', models.CharField(max_length=320, unique=True, verbose_name='source')),
-                ('destination', models.CharField(max_length=320, verbose_name='destination')),
-                ('comments', models.TextField(blank=True, verbose_name='comments')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "source",
+                    models.CharField(
+                        max_length=320, unique=True, verbose_name="source"
+                    ),
+                ),
+                (
+                    "destination",
+                    models.CharField(max_length=320, verbose_name="destination"),
+                ),
+                ("comments", models.TextField(blank=True, verbose_name="comments")),
             ],
             options={
-                'verbose_name': 'forward',
-                'verbose_name_plural': 'forwards',
+                "verbose_name": "forward",
+                "verbose_name_plural": "forwards",
             },
         ),
     ]

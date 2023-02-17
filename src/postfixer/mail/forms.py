@@ -37,14 +37,16 @@ class AdminPasswordChangeForm(_AdminPasswordChangeForm):
         if password1 and password2:
             if password1 != password2:
                 raise forms.ValidationError(
-                    self.error_messages["password_mismatch"], code="password_mismatch",
+                    self.error_messages["password_mismatch"],
+                    code="password_mismatch",
                 )
         return password2
 
     def save(self, commit=True):
         password = self.cleaned_data["password1"]
         self.mailbox.password = hash_password(
-            password, scheme=self.cleaned_data["hash_scheme"],
+            password,
+            scheme=self.cleaned_data["hash_scheme"],
         )
         if commit:
             self.mailbox.save()
@@ -56,10 +58,13 @@ class VirtualMailboxAddForm(forms.ModelForm):
         "password_mismatch": _("The two password fields didn't match."),
     }
     email = forms.EmailField(
-        label=_("E-mail address"), validators=[validate_email_domain],
+        label=_("E-mail address"),
+        validators=[validate_email_domain],
     )
     password1 = forms.CharField(
-        label=_("Password"), strip=False, widget=forms.PasswordInput,
+        label=_("Password"),
+        strip=False,
+        widget=forms.PasswordInput,
     )
     password2 = forms.CharField(
         label=_("Password confirmation"),
@@ -83,7 +88,8 @@ class VirtualMailboxAddForm(forms.ModelForm):
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(
-                self.error_messages["password_mismatch"], code="password_mismatch",
+                self.error_messages["password_mismatch"],
+                code="password_mismatch",
             )
         return password2
 
@@ -91,7 +97,8 @@ class VirtualMailboxAddForm(forms.ModelForm):
         mailbox = super().save(commit=False)
         mailbox.set_email(self.cleaned_data["email"])
         mailbox.password = hash_password(
-            self.cleaned_data["password1"], scheme=self.cleaned_data["hash_scheme"],
+            self.cleaned_data["password1"],
+            scheme=self.cleaned_data["hash_scheme"],
         )
         if commit:
             mailbox.save()

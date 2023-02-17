@@ -4,15 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("mail", "0005_auto_20191117_1358"),
     ]
 
     operations = [
-        migrations.RemoveConstraint(model_name="virtualmailbox", name="unique_email",),
-        migrations.RemoveField(model_name="forward", name="destination",),
-        migrations.RemoveField(model_name="forward", name="source",),
+        migrations.RemoveConstraint(
+            model_name="virtualmailbox",
+            name="unique_email",
+        ),
+        migrations.RemoveField(
+            model_name="forward",
+            name="destination",
+        ),
+        migrations.RemoveField(
+            model_name="forward",
+            name="source",
+        ),
         migrations.AddConstraint(
             model_name="forward",
             constraint=models.UniqueConstraint(

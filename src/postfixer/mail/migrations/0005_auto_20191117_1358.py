@@ -18,7 +18,6 @@ def migrate_destinations(apps, _):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("mail", "0004_auto_20191117_1358"),
     ]
