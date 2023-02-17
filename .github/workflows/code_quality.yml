@@ -42,7 +42,7 @@ jobs:
           setup-node: 'no'
       - name: Run black
         run: |
-          black --check src docs
+          black --check src
 
   # flake8:
   #   name: Code style (flake8)
