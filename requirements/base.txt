@@ -10,7 +10,7 @@ cffi==1.15.1
     # via cryptography
 cryptography==39.0.1
     # via -r requirements/base.in
-django==3.2.17
+django==3.2.18
     # via -r requirements/base.in
 django-better-admin-arrayfield==1.0.4
     # via -r requirements/base.in
