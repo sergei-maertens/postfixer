@@ -1,0 +1,135 @@
+name: Run CI
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: regexit/postfixer
+  DJANGO_SETTINGS_MODULE: postfixer.conf.ci
+
+jobs:
+  tests:
+    name: Run the Django test suite
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        # Needed because the postgres container does not provide a healthcheck
+        options:
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+          --name postgres
+      redis:
+        image: redis:6
+        ports:
+          - 6379:6379
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up backend environment
+        uses: maykinmedia/setup-django-backend@v1
+        with:
+          python-version: '3.10'
+          optimize-postgres: 'yes'
+          pg-service: 'postgres'
+          setup-node: 'no'
+
+      - name: Run tests
+        run: |
+          python src/manage.py compilemessages
+          python src/manage.py collectstatic --noinput --link
+          coverage run src/manage.py test src
+        env:
+          SECRET_KEY: dummy
+          DB_USER: postgres
+          DB_PASSWORD: ''
+
+      - name: Publish coverage report
+        uses: codecov/codecov-action@v3
+
+  # see https://github.com/orgs/community/discussions/26671
+  docker_build_setup:
+    name: Set up docker build 'dynamic' env variables
+    runs-on: ubuntu-latest
+    outputs:
+      image-name: ${{ steps.set-output-defaults.outputs.image-name }}
+    steps:
+      - name: Set output with default values
+        id: set-output-defaults
+        run: |
+          echo "image-name=${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
+
+  docker_build:
+    needs: docker_build_setup
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image_name: ${{ needs.docker_build_setup.outputs.image-name }}
+
+  docker_push:
+    needs:
+      - tests
+      - docker_build
+
+    name: Push Docker image
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' # Exclude PRs
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Derive version
+        id: vars
+        run: |
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name (if present at all)
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "main" ] && VERSION=latest
+
+          # PRs result in version 'merge' -> transform that into 'latest'
+          [ "$VERSION" == "merge" ] && VERSION=latest
+
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Download built image
+        uses: actions/download-artifact@v3
+        with:
+          name: docker-image-${{ steps.vars.outputs.version }}
+
+      - name: Load image
+        run: |
+          docker image load -i image.tar
+
+      - name: Log into registry
+        run:
+          echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }}
+          --password-stdin
+
+      - name: Push the Docker image (production)
+        run: docker push $IMAGE_NAME:$TAG
+        env:
+          TAG: ${{ steps.vars.outputs.version }}
+
+  # update-docker-readme:
+  #   needs:
+  #     - docker_build_setup
+  #     - docker_push
+  #   uses: ./.github/workflows/dockerhub-description.yml
+  #   with:
+  #     image_name: ${{ needs.docker_build_setup.outputs.image-name }}
+  #   secrets:
+  #     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  #     DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}

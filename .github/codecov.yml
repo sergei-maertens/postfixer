@@ -1,0 +1,7 @@
+# Keep in sync with setup.cfg in the root of the project
+ignore:
+  - "src/manage.py"
+  - "src/postfixer/wsgi.py"
+  - "**/migrations/*"
+  - "*.py-tpl"
+  - "**/tests/*"
