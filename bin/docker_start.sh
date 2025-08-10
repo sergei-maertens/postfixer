@@ -22,11 +22,17 @@ python src/manage.py migrate
 # Start server
 >&2 echo "Starting server"
 exec uwsgi \
+    --strict \
     --http :8000 \
+    --http-keepalive \
+    --single-interpreter \
+    --die-on-term \
+    --need-app \
     --module postfixer.wsgi \
     --static-map /static=/app/static \
     --static-map /media=/app/media  \
     --chdir src \
-    --processes 4 \
-    --threads 1
-    # processes & threads are needed for concurrency without nginx sitting inbetween
+    --enable-threads \
+    --master \
+    --processes 1 \
+    --threads 4

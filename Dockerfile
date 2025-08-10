@@ -6,7 +6,7 @@
 # Stage 1 - Backend build environment
 # includes compilers and build tooling to create the environment
 
-FROM python:3.10-slim-bookworm AS backend-build
+FROM python:3.12-slim-bookworm AS backend-build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         pkg-config \
@@ -17,20 +17,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 RUN mkdir /app/src
 
-# Ensure we use the latest version of pip
-RUN pip install pip setuptools -U
+# Use uv to install dependencies
+RUN pip install uv -U
 COPY ./requirements /app/requirements
-RUN pip install -r requirements/production.txt
-
+RUN uv pip install --system -r requirements/production.txt
 
 # Stage 3 - Build docker image suitable for production
-FROM python:3.10-slim-bookworm
+FROM python:3.12-slim-bookworm
 
 # Stage 3.1 - Set up the needed production dependencies
 # install all the dependencies for GeoDjango
 RUN apt-get update && apt-get install -y --no-install-recommends \
         procps \
-        vim \
         mime-support \
         postgresql-client \
         gettext \
@@ -51,7 +49,7 @@ RUN mkdir /app/media
 VOLUME ["/app/log", "/app/media"]
 
 # copy backend build deps
-COPY --from=backend-build /usr/local/lib/python3.10 /usr/local/lib/python3.10
+COPY --from=backend-build /usr/local/lib/python3.12 /usr/local/lib/python3.12
 COPY --from=backend-build /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 # Uncomment if you use celery
 # COPY --from=backend-build /usr/local/bin/celery /usr/local/bin/celery

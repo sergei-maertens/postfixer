@@ -1,10 +1,10 @@
 -c ci.txt
+-r ci.txt
 
 # Typing
 django-stubs
 
 # Helpers
-pip-tools
 gitpython
 
 # Debug tooling

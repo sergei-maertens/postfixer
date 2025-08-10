@@ -10,6 +10,7 @@ Ubuntu 18.04 dovecot does not support:
 
 Next best thing is SHA512-CRYPT
 """
+
 from typing import Tuple
 
 from passlib.hash import md5_crypt, plaintext, sha256_crypt, sha512_crypt

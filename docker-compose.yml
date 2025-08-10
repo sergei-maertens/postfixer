@@ -1,11 +1,9 @@
-# Inspired by https://docs.docker.com/compose/django/
-version: '3'
+---
 
 services:
   db:
-    # NOTE: No persistance storage configured.
-    # See: https://hub.docker.com/_/postgres/
-    image: postgres
+    image: postgres:17
+
   web:
     build: .
     image: docker.io/regexit/postfixer:${TAG:-latest}

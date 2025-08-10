@@ -13,7 +13,7 @@ class QueryTests(TestCase):
 
         maildirs = VirtualMailbox.objects.get_maildir("info@regex-it.nl")
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             maildirs,
             ["regex-it.nl/info/"],
             transform=identity,
@@ -24,7 +24,7 @@ class QueryTests(TestCase):
 
         domains = VirtualMailbox.objects.get_domain("regex-it.nl")
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             domains,
             ["regex-it.nl"],
             transform=identity,
@@ -40,6 +40,6 @@ class QueryTests(TestCase):
         qs2 = get_domain("xbbtx.be")
         qs3 = get_domain("gmail.com")
 
-        self.assertQuerysetEqual(qs1, ["regex-it.nl"], transform=identity)
-        self.assertQuerysetEqual(qs2, ["xbbtx.be"], transform=identity)
-        self.assertQuerysetEqual(qs3, [], transform=identity)
+        self.assertQuerySetEqual(qs1, ["regex-it.nl"], transform=identity)
+        self.assertQuerySetEqual(qs2, ["xbbtx.be"], transform=identity)
+        self.assertQuerySetEqual(qs3, [], transform=identity)

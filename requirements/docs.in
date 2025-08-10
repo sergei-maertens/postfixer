@@ -1,4 +1,5 @@
 -c base.txt
+-r base.txt
 
 # sphinx
 # sphinx_rtd_theme

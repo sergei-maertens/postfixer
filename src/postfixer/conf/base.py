@@ -1,5 +1,8 @@
 import os
 
+import sentry_sdk
+from sentry_sdk.integrations import django
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 DJANGO_PROJECT_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.path.pardir)
@@ -249,22 +252,17 @@ LIMIT_DOMAINS_TO = (
 # Library settings
 #
 
-# Raven
+# Sentry
 SENTRY_DSN = os.getenv("SENTRY_DSN")
 
 if SENTRY_DSN:
-    INSTALLED_APPS = INSTALLED_APPS + ["raven.contrib.django.raven_compat"]
-
-    RAVEN_CONFIG = {
+    SENTRY_CONFIG = {
         "dsn": SENTRY_DSN,
-        # 'release': raven.fetch_git_sha(BASE_DIR), doesn't work in Docker
+        "environment": ENVIRONMENT,
     }
-    LOGGING["handlers"].update(
-        {
-            "sentry": {
-                "level": "WARNING",
-                "class": "raven.handlers.logging.SentryHandler",
-                "dsn": RAVEN_CONFIG["dsn"],
-            }
-        }
+
+    sentry_sdk.init(
+        **SENTRY_CONFIG,
+        integrations=[django.DjangoIntegration()],
+        send_default_pii=False,
     )

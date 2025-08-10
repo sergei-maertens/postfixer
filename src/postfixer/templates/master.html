@@ -1,4 +1,4 @@
-{% load staticfiles %}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -6,21 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-
-        <link href="{% static 'css/screen.css' %}" media="screen" rel="stylesheet" type="text/css" />
-        {% block extra_css %}{% endblock %}
-        <link href="{% static 'ico/favicon.png' %}" rel="shortcut icon">
     </head>
 
-    <body class="{% block body-class %}{% endblock %}">
+    <body>
         <main>
-            {% block content %}
-                Override <code>{% verbatim %}{% block content %}{% endverbatim %}</code>
-                to get some actual content.
-            {% endblock %}
+            {% block content %}Hi.{% endblock %}
         </main>
-
-
-        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
